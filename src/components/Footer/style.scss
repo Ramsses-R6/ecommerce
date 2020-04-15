@@ -1,0 +1,19 @@
+@import '../../variables.scss';
+
+.footer-container {
+  background-color: $pink;
+  color: white;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1em;
+  & > div {
+    width: 33%;
+    min-width: 200px;
+    padding: 1em 0;
+  }
+
+  & a {
+    color: white;
+    text-decoration: none;
+  }
+}

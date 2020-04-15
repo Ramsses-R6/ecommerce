@@ -30,8 +30,10 @@ class CartProduct extends Component {
   handleOnIncrease = () => {
     const { changeProductQuantity } = this.props;
     const { product } = this.state;
+    if (product.quantity < 5) {
     product.quantity = product.quantity + 1;
-    changeProductQuantity(product);
+      changeProductQuantity(product);
+    }
   }
 
   handleOnDecrease = () => {

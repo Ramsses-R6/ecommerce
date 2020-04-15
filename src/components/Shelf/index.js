@@ -3,23 +3,27 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { fetchProducts } from '../../services/shelf/actions';
+import { addProduct } from '../../services/cart/actions';
 
 import Spinner from '../Spinner';
 import ShelfHeader from './ShelfHeader';
 import ProductList from './ProductList';
+import ModalConfirm from '../ModalConfirm';
 
 import './style.scss';
 
 class Shelf extends Component {
   static propTypes = {
     fetchProducts: PropTypes.func.isRequired,
-    products: PropTypes.array.isRequired,
+    // products: PropTypes.array.isRequired,
     filters: PropTypes.array,
     sort: PropTypes.string
   };
 
   state = {
-    isLoading: false
+    isLoading: false,
+    modalOpen: false,
+    product: null
   };
 
   componentDidMount() {
@@ -48,16 +52,35 @@ class Shelf extends Component {
     });
   };
 
+  handleAddProduct = (product) => {
+    this.setState({ ...this.state, modalOpen: true, product })
+  }
+
+  handleAccept = () => {
+    this.props.addProduct(this.state.product);
+    this.setState({ ...this.state, modalOpen: false, product: null })
+  }
+
   render() {
     const { products } = this.props;
     const { isLoading } = this.state;
 
+    if (!products) {
+      return <Spinner />
+    }
+
     return (
       <React.Fragment>
-        {isLoading && <Spinner />}
+        {isLoading || !products && <Spinner />}
         <div className="shelf-container">
           <ShelfHeader productsLength={products.length} />
-          <ProductList products={products} />
+          <ProductList products={products} handleAddProduct={this.handleAddProduct} />
+          <ModalConfirm
+            isOpen={this.state.modalOpen}
+            onAccept={this.handleAccept}
+            onClose={() => this.setState({ ...this.state, modalOpen: false })}
+            text='¿Seguro quieres agregar este artículo?'
+          />
         </div>
       </React.Fragment>
     );
@@ -72,5 +95,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchProducts }
+  { fetchProducts, addProduct }
 )(Shelf);

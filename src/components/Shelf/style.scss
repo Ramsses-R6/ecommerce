@@ -1,3 +1,5 @@
+@import '../../variables.scss';
+
 .shelf-container {
   display: flex;
   flex-wrap: wrap;
@@ -59,8 +61,9 @@
       right: 10px;
       padding: 5px;
       font-size: 0.6em;
-      background-color: #1b1a20;
+      background-color: $pink;
       cursor: default;
+      font-size: 25px;
     }
 
     &__thumb {
@@ -88,21 +91,32 @@
 
     &__price {
       height: 60px;
+      color: $lead;
 
       .val {
         b {
           font-size: 1.5em;
           margin-left: 5px;
         }
+
+        &--promo {
+          text-decoration: line-through;
+          color: $timberwolf;
+        }
+      }
+
+      .promo {
+        color: $lead;
+        font-size: 23px;
       }
 
       .installment {
-        color: #9c9b9b;
+        color: $timberwolf;
       }
     }
 
     &__buy-btn {
-      background-color: #1b1a20;
+      background-color: $pink;
       color: #fff;
       padding: 15px 0;
       margin-top: 10px;

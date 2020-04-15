@@ -104,7 +104,9 @@ class FloatCart extends Component {
     if (product.quantity <= 0) {
       this.removeProduct(product);
     }
-    updateCart(cartProducts);
+    if (product.quantity <= 5) {
+      updateCart(cartProducts);
+    }
   }
 
   render() {

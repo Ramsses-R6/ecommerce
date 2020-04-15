@@ -1,27 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { FaShippingFast } from 'react-icons/fa';
 
 import Thumb from '../../../Thumb';
 import { formatPrice } from '../../../../services/util';
 import { addProduct } from '../../../../services/cart/actions';
 
-const Product = ({ product, addProduct }) => {
+const Product = ({ product, handleAddProduct }) => {
   product.quantity = 1;
 
   let formattedPrice = formatPrice(product.price, product.currencyId);
 
-  let productInstallment;
+  let productPromoPrice;
 
-  if (!!product.installments) {
-    const installmentPrice = product.price / product.installments;
+  if (!!product.promoPrice) {
+    const promoPrice = product.promoPrice;
+    let formattedPromoPrice = formatPrice(promoPrice, product.currencyId);
 
-    productInstallment = (
-      <div className="installment">
-        <span>or {product.installments} x</span>
+    productPromoPrice = (
+      <div className="promo">
         <b>
           {product.currencyFormat}
-          {formatPrice(installmentPrice, product.currencyId)}
+          {formattedPromoPrice}
         </b>
       </div>
     );
@@ -30,11 +31,11 @@ const Product = ({ product, addProduct }) => {
   return (
     <div
       className="shelf-item"
-      onClick={() => addProduct(product)}
+      onClick={() => handleAddProduct(product)}
       data-sku={product.sku}
     >
       {product.isFreeShipping && (
-        <div className="shelf-stopper">Free shipping</div>
+        <div className="shelf-stopper"><FaShippingFast /></div>
       )}
       <Thumb
         classes="shelf-item__thumb"
@@ -43,14 +44,12 @@ const Product = ({ product, addProduct }) => {
       />
       <p className="shelf-item__title">{product.title}</p>
       <div className="shelf-item__price">
-        <div className="val">
-          <small>{product.currencyFormat}</small>
-          <b>{formattedPrice.substr(0, formattedPrice.length - 3)}</b>
-          <span>{formattedPrice.substr(formattedPrice.length - 3, 3)}</span>
+        <div className={`val${!!product.promoPrice ? '--promo' : ''}`}>
+          <b>{product.currencyFormat}{formattedPrice}</b>
         </div>
-        {productInstallment}
+        {productPromoPrice}
       </div>
-      <div className="shelf-item__buy-btn">Add to cart</div>
+      <div className="shelf-item__buy-btn">Agregar al carrito</div>
     </div>
   );
 };

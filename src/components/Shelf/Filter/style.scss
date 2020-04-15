@@ -1,3 +1,5 @@
+@import '../../../variables.scss';
+
 .filters {
   width: 15%;
   margin-right: 15px;
@@ -5,7 +7,7 @@
   .star-button-container {
     text-align: center;
     small {
-      color: #aaa;
+      color: $timberwolf;
       margin-bottom: 8px;
       display: inline-block;
     }
@@ -29,7 +31,7 @@
     }
 
     a {
-      color: #aaa;
+      color: $timberwolf;
       text-decoration: none;
 
       &:hover {
@@ -67,12 +69,12 @@
 
       /* On mouse-over, add a grey background color */
       &:hover input ~ .checkmark {
-        border: 1px solid #1b1a20;
+        border: 1px solid $pink;
       }
 
       /* When the checkbox is checked, add a blue background */
       & input:checked ~ .checkmark {
-        background-color: #1b1a20;
+        background-color: $pink;
         color: #ececec;
       }
 
@@ -98,7 +100,7 @@
         border-radius: 50%;
         line-height: 35px;
         text-align: center;
-        color: #1b1a20;
+        color: $pink;
         background-color: #ececec;
 
         border: 1px solid transparent;
